@@ -49,7 +49,7 @@ client.on("message", async message => {
 });
 
 client.on("message", async message => {
-  if (message.content.startsWith("rt") {
+  if (message.content.startsWith("rt")) {
       const emoji = message.guild.emojis.find(emoji => emoji.name === 'rt');
       message.react(emoji);
   }
