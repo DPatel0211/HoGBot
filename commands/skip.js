@@ -1,8 +1,7 @@
 const Discord = require('discord.js')
 
 module.exports.run = async (client, message, args, ops) => {
-    let ops = client.ops
-    let fetched = ops.active.get(message.guild.id)
+    let fetched = client.ops.active.get(message.guild.id)
     if (!fetched) {
         return message.channel.send("Nothing is currently playing! Please queue a song w/ $play `YouTube url` to be able to use this command!");   
     }
