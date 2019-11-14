@@ -28,7 +28,7 @@
 
 client.on('ready', () => {
     setInterval(function () {
-      let statuses = ['made w/ JavaScript', "command prefix is '$'", 'developed by @DPatel#1426','https://github.com/DPatel0211/HoGBot/'];
+      let statuses = ['Hosted w/ Heroku','made w/ JavaScript', "command prefix is '$'", 'developed by @DPatel#1426','https://github.com/DPatel0211/HoGBot/'];
       let status = statuses[Math.floor(Math.random() * statuses.length)];
       client.user.setPresence({ game: { name: status }, status: 'dnd'});
     }, 4000);
