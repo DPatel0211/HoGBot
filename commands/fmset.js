@@ -40,7 +40,7 @@ module.exports.run = async (client, message, args) => {
 
         await db.run("INSERT INTO discordLastFMUser (discordID, lastFMUsername) VALUES (?, ?)", [message.member.user.id, lastFMUsername]);
 
-        message.reply(`Last.fm account with name "${lastFMUsername}" linked!\n**NOTE**: You may have to link your account again to use this command, currently working on trying to set a database to store user info on Heroku!`);
+        message.reply(`Last.fm account with name "${lastFMUsername}" linked!\n**NOTE**: You may have to link your account again to use the other fm commands, currently working on trying to set a database to store user info on Heroku!`);
       }
       catch (e) {
         message.reply(`failed to find user with name: ${lastFMUsername}!`);
