@@ -11,7 +11,7 @@ module.exports.run = async (client, message, args, ops) => {
       return message.channel.send("You aren't in a voice channel to use this command! Try joining the voice channel to access this command!");
     }
     
-    let userCount message.member.voiceChannel.members.size;
+    let userCount = message.member.voiceChannel.members.size;
     
     let required = Math.ceil(userCount/2);
     
