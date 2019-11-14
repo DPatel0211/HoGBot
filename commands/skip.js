@@ -1,38 +1,38 @@
 const Discord = require('discord.js')
 
 module.exports.run = async (client, message, args, ops) => {
-    let fetched = ops.active.get(message.guild.id);
-    
+    let ops = client.ops
+    let fetched = ops.active.get(message.guild.id)
     if (!fetched) {
-      return message.channel.send("There currently isn't any music playing! Use $play `youtube url` to queue up a song!");
+        return message.channel.send("Nothing is currently playing! Please queue a song w/ $play `YouTube url` to be able to use this command!");   
     }
-    
     if (message.member.voiceChannel !== message.guild.me.voiceChannel) {
-      return message.channel.send("You aren't in a voice channel to use this command! Try joining the voice channel to access this command!");
+        return message.reply("you must be in the same voice channel as the bot to use this command!");
     }
-    
-    let userCount = message.member.voiceChannel.members.size;
-    
-    let required = Math.ceil(userCount/2);
-    
-    if (!fetched.queue[0].voteSkips) {
-      fetched.queue[0].voteSkips = [];
-    }
-    
-    if (fetched.queue[0].voteSkips.includes(message.member.id)) {
-      return message.reply(`You already voted to skip! ${fetched.queue[0].voteSkips.length}/${required} needed to skip the song!`);
-    }
-    
-    fetched.queue[0].voteSkips.push(message.member.id);
-    
     ops.active.set(message.guild.id, fetched);
-    
-    if (fetched.queue[0].voteSkips.length >= required) {
-      return message.channel.send("Song skipped!");
-      return fetched.dispatcher.emit('end');
+    fetched.queue.shift()
+
+    if (fetched.queue.length > 0) {
+        async function play(client, ops, data) {
+
+
+            const ytdl = require("ytdl-core")
+            client.channels.get(data.queue[0].announceChannel).send(`Now Playing: ${data.queue[0].songTitle} | Requested by ${data.queue[0].requester}`)
+            data.dispatcher = await data.connection.playStream(ytdl(data.queue[0].url, { filter: 'audioonly' }))
+            data.dispatcher.guildID = data.guildID
+            data.dispatcher.once('finish', function () {
+                finish(client, ops, this)
+            })
+        }
+        ops.active.set(fetched.dispatcher.guildID, fetched)
+        play(client, ops, fetched)
+    } else {
+        ops.active.delete(fetched.dispatcher.guildID)
+        let vc = client.guilds.get(fetched.dispatcher.guildID).me.voiceChannel
+        if (vc) vc.leave()
     }
-    
-    message.channel.send(`Voted to skip! ${fetched.queue[0].voteSkips.length}/${required} votes still needed to skip...`);
+    message.channel.send("Skipped!")
+}
 }
 
 module.exports.help = {
