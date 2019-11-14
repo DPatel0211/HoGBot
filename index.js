@@ -48,4 +48,11 @@ client.on("message", async message => {
     if (commandfile) commandfile.run(client,message, args, ops);
 });
 
+client.on("message", async message => {
+  if (message.content.startsWith("rt") {
+      const emoji = message.guild.emojis.find(emoji => emoji.name === 'rt');
+      message.react(emoji);
+  }
+});
+
 client.login(token);
