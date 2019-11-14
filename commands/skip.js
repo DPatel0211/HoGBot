@@ -34,3 +34,7 @@ module.exports.run = async (client, message, args, ops) => {
     
     message.channel.send(`Voted to skip! ${fetched.queue[0].voteSkips.length}/${required} votes still needed to skip...`);
 }
+
+module.exports.help = {
+    name: 'skip'
+}
