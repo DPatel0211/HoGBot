@@ -15,7 +15,7 @@
     "ffmpeg": "0.0.4",
     "figlet": "^1.2.3",
     "giphy-js-sdk-core": "^1.0.6",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "node-superfetch": "^0.1.9",
     "opusscript": "0.0.7",
     "relevant-urban": "^2.0.0",
